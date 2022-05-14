@@ -173,3 +173,30 @@ class Grafo:
                         else:
                             return True
         return False
+
+    def dijkstra(self, s):
+        dist = [float("inf") for v in range(self.num_vert)]
+        pred = [None for v in range(self.num_vert)]
+        dist[s] = 0
+        Q = []
+        for i in range(self.num_vert):
+            Q.append(i)
+
+        while Q:
+            u = menor_dist(dist, Q)
+            Q.remove(u)
+            for (v, w) in self.lista_adj[u]:
+                if dist[v] > dist[u] + w:
+                    dist[v] = dist[u] + w
+                    pred[v] = u
+        return pred
+
+def menor_dist(dist, Q):
+    menorD = float("inf")
+    menorV = None
+    for i in range(len(Q)):
+        aux = Q[i]
+        if dist[aux] < menorD:
+            menorD = dist[aux]
+            menorV = aux
+    return menorV
