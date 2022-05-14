@@ -191,6 +191,29 @@ class Grafo:
                     pred[v] = u
         return pred
 
+    def bellman_ford(self, s):
+        dist = [float("inf") for v in range(self.num_vert)]
+        pred = [None for v in range(self.num_vert)]
+        dist[s] = 0
+        for i in range(self.num_vert-1):
+            trocou = False
+            for (u, w) in self.lista_adj[i]:
+                if dist[u] > dist[i] + w:
+                    dist[u] = dist[i] + w
+                    pred[u] = i
+                    trocou = True
+            if trocou == False:
+                break
+        return pred
+
+    def rec_caminho(s, t, pred):
+        C = [t]
+        aux = t
+        while aux != s:
+            aux = pred[aux]
+            C.insert(0,aux)
+        return C
+
 def menor_dist(dist, Q):
     menorD = float("inf")
     menorV = None
@@ -200,3 +223,4 @@ def menor_dist(dist, Q):
             menorD = dist[aux]
             menorV = aux
     return menorV
+
