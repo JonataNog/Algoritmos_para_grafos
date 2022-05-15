@@ -5,3 +5,4 @@ g1.ler_arquivo("toy.txt")
 
 print(g1.dijkstra(0))
 print(g1.bellman_ford(0))
+print(g1.busca_largura_caminhos(0))

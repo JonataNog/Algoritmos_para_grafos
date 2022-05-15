@@ -87,7 +87,8 @@ class Grafo:
             # Inicializacao das estruturas de dados
             self.lista_adj = [[] for i in range(self.num_vert)]
             self.mat_adj = [[0 for j in range(self.num_vert)] for i in range(self.num_vert)]
-            flag = 1
+            flag = 0
+            stop = False
             # Le cada aresta do arquivo
             for i in range(0, cont_arestas):
                 str = arq.readline()
@@ -95,8 +96,11 @@ class Grafo:
                 u = int(str[0])  # Vertice origem
                 v = int(str[1])  # Vertice destino
                 w = int(str[2])  # Peso da aresta
-                if w < 0:
+                if w < 0 and stop == False:
                     flag = 2
+                    stop = True
+                elif w > 1 and stop == False:
+                    flag = 1
                 self.add_aresta(u, v, w)
             return flag
         except IOError:
@@ -181,7 +185,6 @@ class Grafo:
         Q = []
         for i in range(self.num_vert):
             Q.append(i)
-
         while Q:
             u = menor_dist(dist, Q)
             Q.remove(u)
@@ -205,6 +208,20 @@ class Grafo:
             if trocou == False:
                 break
         return pred
+
+    def busca_largura_caminhos(self, s):
+        dist = [float("inf") for v in range(self.num_vert)]
+        pred = [None for v in range(self.num_vert)]
+        Q = [s]
+        dist[s] = 0
+        while Q:
+            u = Q.pop(0)
+            for (v, w) in self.lista_adj[u]:
+                if dist[v] == float("inf"):
+                    Q.append(v)
+                    dist[v] = dist[u] + 1
+                    pred[v] = u
+        return dist,pred
 
     def rec_caminho(s, t, pred):
         C = [t]
