@@ -1,3 +1,5 @@
+import time
+
 class Grafo:
 
     def __init__(self, num_vert=0, num_arestas=0, lista_adj=None, mat_adj=None):
@@ -192,7 +194,8 @@ class Grafo:
                 if dist[v] > dist[u] + w:
                     dist[v] = dist[u] + w
                     pred[v] = u
-        return pred
+        fim = time.process_time()
+        return pred, dist, fim
 
     def bellman_ford(self, s):
         dist = [float("inf") for v in range(self.num_vert)]
@@ -207,7 +210,8 @@ class Grafo:
                     trocou = True
             if trocou == False:
                 break
-        return pred
+        fim = time.process_time()
+        return pred, dist, fim
 
     def busca_largura_caminhos(self, s):
         dist = [float("inf") for v in range(self.num_vert)]
@@ -221,8 +225,10 @@ class Grafo:
                     Q.append(v)
                     dist[v] = dist[u] + 1
                     pred[v] = u
-        return dist,pred
+        fim = time.process_time()
+        return pred, dist, fim
 
+    @staticmethod
     def rec_caminho(s, t, pred):
         C = [t]
         aux = t
