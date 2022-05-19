@@ -26,8 +26,3 @@ caminho = g.rec_caminho(origem, destino, pred)
 print("Caminho: ", caminho)
 print("Custo: ", custo)
 print("Tempo: ", tempo)
-
-
-
-
-

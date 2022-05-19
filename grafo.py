@@ -180,6 +180,16 @@ class Grafo:
                             return True
         return False
 
+    def menor_dist(self, dist, Q):
+        menorD = float("inf")
+        menorV = None
+        for i in range(len(Q)):
+            aux = Q[i]
+            if dist[aux] < menorD:
+                menorD = dist[aux]
+                menorV = aux
+        return menorV
+
     def dijkstra(self, s):
         dist = [float("inf") for v in range(self.num_vert)]
         pred = [None for v in range(self.num_vert)]
@@ -188,7 +198,7 @@ class Grafo:
         for i in range(self.num_vert):
             Q.append(i)
         while Q:
-            u = menor_dist(dist, Q)
+            u = self.menor_dist(dist, Q)
             Q.remove(u)
             for (v, w) in self.lista_adj[u]:
                 if dist[v] > dist[u] + w:
@@ -228,22 +238,10 @@ class Grafo:
         fim = time.process_time()
         return pred, dist, fim
 
-    @staticmethod
-    def rec_caminho(s, t, pred):
+    def rec_caminho(self, s, t, pred):
         C = [t]
         aux = t
         while aux != s:
             aux = pred[aux]
             C.insert(0,aux)
         return C
-
-def menor_dist(dist, Q):
-    menorD = float("inf")
-    menorV = None
-    for i in range(len(Q)):
-        aux = Q[i]
-        if dist[aux] < menorD:
-            menorD = dist[aux]
-            menorV = aux
-    return menorV
-
